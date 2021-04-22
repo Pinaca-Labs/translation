@@ -1,0 +1,136 @@
+ <!DOCTYPE html>
+<html>
+<head>
+  <title>Pinaca Translation</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+
+<style>
+  #resultJSON:empty {display: none}
+
+  #loader {
+    z-index:1000;
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid #1e93e0;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    -webkit-animation: spin 1s linear infinite;
+    /* Safari */
+    animation: spin 1s linear infinite;
+  }
+
+  /* Safari */
+
+  @-webkit-keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+
+<script>
+  function parseQuery(e) {
+    query = $('#queryInput').val();
+    $('#loader').show();
+
+    let payload = {
+      text: query,
+      language: $('#menu1').val()
+    };
+    console.log(JSON.stringify(payload, undefined, 2))
+    axios.post('/translate', payload)
+    .then((response) => {
+      if (!response || !response.data) {
+        console.error('Server Error! Please try again');
+        $('#loader').hide();
+        return;
+      }
+      $('#loader').hide();
+      console.log(JSON.stringify(response.data, undefined, 2))
+      processResponse(response.data);
+    })
+    .catch((err) => {
+      $('#loader').hide();
+      console.error(err);
+    })
+  }
+
+    function processResponse(data) {
+        $('#resultJSON').html('<h4>Result:</h4><br>' + JSON.stringify(data, undefined, 2));
+    }
+
+    window.onload = function() {
+        console.log( "ready!" );
+        $('#loader').hide();
+    };
+</script>
+
+<script>
+  $(function(){
+      $(".dropdown-menu li a").click(function(){
+        $(".btn:first-child").text($(this).text());
+        $(".btn:first-child").val($(this).text());
+      });
+
+  });
+</script>
+
+<div style="width: 60%; text-align:center; position: absolute; left: 20%; top: 20%;">
+    <h1>Pinaca labs translation</h1>
+
+    <div>
+        <textarea style="top:20px" type="textarea" class="form-control" id="queryInput" placeholder="Pinaca Labs translation demo. Input limit: 600 characters."> </textarea>
+        
+        <div id="dropDownDiv" class="dropdown" style="top:10px; position: relative; float: left;" >
+            <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">Select Language
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Telugu</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Tamil</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Malayalam</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Kannada</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Marathi</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Hindi</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Bengali</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Punjabi</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Gujarati</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Chinese - English</a></li>
+	      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tamil - English</a></li>
+            </ul>
+
+            <button class="btn btn-primary" type="button" onclick="parseQuery()">Translate</button>
+        </div>
+
+	      <div class="col-sm-12" style="top:30px; position: relative;"> <pre id='resultJSON'></pre> </div>
+
+    </div>
+
+    <div style="top:1%; position: relative;" id="loader"></div>
+
+</div>
+
+
+</body>
+</html> 
