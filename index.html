@@ -1,4 +1,6 @@
- <!DOCTYPE html>
+
+
+<!DOCTYPE html>
 <html>
 <head>
   <title>Pinaca Translation</title>
@@ -51,25 +53,28 @@
 
 
 <script>
+
   function parseQuery(e) {
     query = $('#queryInput').val();
+    query = query.split("~")
     $('#loader').show();
 
     let payload = {
-      text: query,
-      language: $('#menu1').val()
+      data: query,
+      // language: $('#menu1').val()
     };
-    console.log(JSON.stringify(payload, undefined, 2))
-    axios.post('/translate', payload)
+    const headers = {
+      'Content-Type': 'application/json',
+    }
+    
+    axios.post('http://127.0.0.1:8080/async', payload,{headers: headers})
     .then((response) => {
-      if (!response || !response.data) {
-        console.error('Server Error! Please try again');
-        $('#loader').hide();
-        return;
-      }
-      $('#loader').hide();
-      console.log(JSON.stringify(response.data, undefined, 2))
-      processResponse(response.data);
+    if (response.data) {
+    let res_payload = {
+    unique_id: response.data.unique_id    
+    };
+      result_call(res_payload, headers)
+    }
     })
     .catch((err) => {
       $('#loader').hide();
@@ -77,25 +82,28 @@
     })
   }
 
+  function result_call(payload, head){
+  var inter = setInterval(()=>{
+    axios.post('http://127.0.0.1:8080/result', payload,{headers: head})
+    .then((response) => {
+      if (response.data) {
+        $('#loader').hide();
+        processResponse(response.data.prediction)
+        clearInterval(inter);
+      }
+    })
+  },500)
+  }
     function processResponse(data) {
-        $('#resultJSON').html('<h4>Result:</h4><br>' + JSON.stringify(data, undefined, 2));
+      var resd = JSON.stringify(data, undefined, 2);
+      $('#resultJSON').html('<h4>Result:</h4><br>' + JSON.stringify(data, undefined, 2));
     }
 
     window.onload = function() {
-        console.log( "ready!" );
         $('#loader').hide();
     };
 </script>
 
-<script>
-  $(function(){
-      $(".dropdown-menu li a").click(function(){
-        $(".btn:first-child").text($(this).text());
-        $(".btn:first-child").val($(this).text());
-      });
-
-  });
-</script>
 
 <div style="width: 60%; text-align:center; position: absolute; left: 20%; top: 20%;">
     <h1>Pinaca labs translation</h1>
