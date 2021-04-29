@@ -199,7 +199,7 @@
             $('#loader').hide();
             $("#translation_head").css("display","block");
             $('#result_area').html(tes[0]);
-            // $("#copy_text").css("display","block");
+            $("#copy_text").css("display","block");
           }
           
         }
@@ -266,8 +266,8 @@
             <div class="col-sm-12" style="top:30px; position: relative;"> 
               <p id="trans_head" style="color: black; display: none;">Translated Text: </p>
               <pre id='resultJSON'></pre> 
-              <textarea rows="6" disabled="disabled" id="result_area"></textarea>
-              <!-- <button id="copy_text" class="btn btn-primary" style="display: none;" onclick="myFunction()">Copy text</button> -->
+              <textarea rows="6" id="result_area"></textarea>
+              <button id="copy_text" class="btn btn-primary" style="display: none;" onclick="myFunction()">Copy text</button>
             </div>
     
         </div>
