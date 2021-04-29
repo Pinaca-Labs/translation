@@ -85,7 +85,17 @@
         text_query = $('#queryInput').val();
         var dropdown_val = $('#menu1').val();
     
-        if(dropdown_val == "" || (/[a-zA-Z]/.test(text_query) == false)){
+        // if(dropdown_val == "" || (/[a-zA-Z]/.test(text_query) == false)){
+        //   $(".errorlist").css("display","block");
+        //   $('#loader').hide();
+        //   setTimeout(fade_out, 2000);
+        //     function fade_out() {
+        //     $(".errorlist").fadeOut();
+        //   }
+        //   return;
+        // }
+
+        if(dropdown_val == "" || text_query == "" || text_query == " "){
           $(".errorlist").css("display","block");
           $('#loader').hide();
           setTimeout(fade_out, 2000);
