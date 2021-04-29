@@ -12,6 +12,7 @@
 <body>
 
 
+
   <style>
 
     #footer {
@@ -24,8 +25,13 @@
     }
     
       #resultJSON:empty {display: none}
-      pre{
+      #result_area:empty {display: none}
+      #result_area{
         color: black;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
       }
     
       .btn-primary{
@@ -100,86 +106,110 @@
         }
         if(dropdown_val == "English - Telugu"){
             url = 'https://translation-api.pinacalabs.com/en_te/async'
-            dropdown_change_call(url, payload, headers);
+            res_url = 'https://translation-api.pinacalabs.com/en_te/result'
+            dropdown_change_call(url, payload, headers, res_url);
         }
         else if(dropdown_val == "English - Tamil"){
-            url = 'http://127.0.0.1:8080/async1'
-            dropdown_change_call(url, payload, headers);
+            url = 'https://translation-api.pinacalabs.com/en_ta/async'
+            res_url = 'https://translation-api.pinacalabs.com/en_ta/result'
+            dropdown_change_call(url, payload, headers, res_url);
         }
         else if(dropdown_val == "English - Malayalam"){
-            url = 'http://127.0.0.1:8080/async2'
-            dropdown_change_call(url, payload, headers);
+            url = 'https://translation-api.pinacalabs.com/en_ml/async'
+            res_url = 'https://translation-api.pinacalabs.com/en_ml/result'
+            dropdown_change_call(url, payload, headers, res_url);
         }
         else if(dropdown_val == "English - Kannada"){
-            url = 'http://127.0.0.1:8080/async3'
-            dropdown_change_call(url, payload, headers);
+            url = 'https://translation-api.pinacalabs.com/en_kn/async'
+            res_url = 'https://translation-api.pinacalabs.com/en_kn/result'
+            dropdown_change_call(url, payload, headers, res_url);
         }
         else if(dropdown_val == "English - Marathi"){
-            url = 'http://127.0.0.1:8080/async4'
-            dropdown_change_call(url, payload, headers);
+            url = 'https://translation-api.pinacalabs.com/en_mr/async'
+            res_url = 'https://translation-api.pinacalabs.com/en_mr/result'
+            dropdown_change_call(url, payload, headers, res_url);
         }
         else if(dropdown_val == "English - Hindi"){
-            url = 'http://127.0.0.1:8080/async5'
-            dropdown_change_call(url, payload, headers);
+            url = 'https://translation-api.pinacalabs.com/en_hi/async'
+            res_url = 'https://translation-api.pinacalabs.com/en_hi/result'
+            dropdown_change_call(url, payload, headers, res_url);
         }
         else if(dropdown_val == "English - Bengali"){
-            url = 'http://127.0.0.1:8080/async6'
-            dropdown_change_call(url, payload, headers);
+            url = 'https://translation-api.pinacalabs.com/en_bn/async'
+            res_url = 'https://translation-api.pinacalabs.com/en_bn/result'
+            dropdown_change_call(url, payload, headers, res_url);
         }
         else if(dropdown_val == "English - Punjabi"){
-            url = 'http://127.0.0.1:8080/async7'
-            dropdown_change_call(url, payload, headers);
+            url = 'https://translation-api.pinacalabs.com/en_pa/async'
+            res_url = 'https://translation-api.pinacalabs.com/en_pa/result'
+            dropdown_change_call(url, payload, headers, res_url);
         }
         else if(dropdown_val == "English - Gujarati"){
-            url = 'http://127.0.0.1:8080/async8'
-            dropdown_change_call(url, payload, headers);
+            url = 'https://translation-api.pinacalabs.com/en_gu/async'
+            res_url = 'https://translation-api.pinacalabs.com/en_gu/result'
+            dropdown_change_call(url, payload, headers, res_url);
         }
         else if(dropdown_val == "Chinese - English"){
-            url = 'http://127.0.0.1:8080/async9'
-            dropdown_change_call(url, payload, headers);
+            url = 'https://translation-api.pinacalabs.com/cn_en/async'
+            res_url = 'https://translation-api.pinacalabs.com/cn_en/result'
+            dropdown_change_call(url, payload, headers, res_url);
         }
         else if(dropdown_val == "Tamil - English"){
-            url = 'http://127.0.0.1:8080/async10'
-            dropdown_change_call(url, payload, headers);
+            url = 'https://translation-api.pinacalabs.com/ta_en/async'
+            res_url = 'https://translation-api.pinacalabs.com/ta_en/result'
+            dropdown_change_call(url, payload, headers, res_url);
+        }
+        else if(dropdown_val == "Sinhala - English"){
+            url = 'https://translation-api.pinacalabs.com/si_en/async'
+            res_url = 'https://translation-api.pinacalabs.com/si_en/result'
+            dropdown_change_call(url, payload, headers, res_url);
         }
       }
     
-      function dropdown_change_call(url, payload, header){
+      function dropdown_change_call(url, payload, header, res_url){
         axios.post(url, payload,{headers: header})
         .then((response) => {
             if (response.data) {
                 let res_payload = {
                 unique_id: response.data.unique_id
                 };
-                result_call(res_payload, header)
+                result_call(res_payload, header, res_url)
             }
         })
       .catch((err) => {
         $('#loader').hide();
-        })
+      })
     }
     
-      function result_call(payload, head){
+      function result_call(payload, head, res_url){
       var inter = setInterval(()=>{
-        axios.post('https://translation-api.pinacalabs.com/en_te/result', payload,{headers: head})
+        axios.post(res_url, payload,{headers: head})
         .then((response) => {
           if (response.data.success) {
             processResponse(response.data.prediction)
             clearInterval(inter);
           }
         })
-      },1000)
+      },4000)
       }
         function processResponse(data) {
           var resd = JSON.stringify(data, undefined, 2);
           if(resd != undefined){
             var tes = JSON.parse(resd);
-          $('#loader').hide();
-          $("#trans_head").css("display","block");
-          $('#resultJSON').html(tes[0]);
+            $('#loader').hide();
+            $("#translation_head").css("display","block");
+            $('#result_area').html(tes[0]);
+            // $("#copy_text").css("display","block");
           }
           
         }
+    
+      function myFunction() {
+        var copyText = document.getElementById("result_area");
+        copyText.select();
+        // copyText.setSelectionRange(0, 9999999)
+        document.execCommand("copy"); 
+    }
     
         window.onload = function() {
             $('#loader').hide();
@@ -210,7 +240,7 @@
       <h3 style="color: maroon;">Text to Text Language Translation Platform</h3>
         <div>
           <h4 class="errorlist" style="display: none; color: red; text-align: center;">Please give input and select Language</h4>
-            <textarea style="top:20px" rows="4" type="textarea" class="form-control" id="queryInput" placeholder="1. Type/Paste your Text \n2.Choose Language to translate from below menu \n3.Click Translate"></textarea>
+            <textarea style="top:20px" rows="6" type="textarea" class="form-control" id="queryInput" placeholder="1. Type/Paste your Text \n2.Choose Language to translate from below menu \n3.Click Translate"></textarea>
             
             <div id="dropDownDiv" class="dropdown" style="top:10px; position: relative; float: left;" >
                 <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">Select Language
@@ -226,7 +256,8 @@
                   <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Punjabi</a></li>
                   <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Gujarati</a></li>
                   <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Chinese - English</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tamil - English</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tamil - English</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Sinhala - English</a></li>
                 </ul>
     
                 <button class="btn btn-primary" type="button" onclick="parseQuery()">Translate</button>
@@ -234,7 +265,10 @@
             
             <div class="col-sm-12" style="top:30px; position: relative;"> 
               <p id="trans_head" style="color: black; display: none;">Translated Text: </p>
-              <pre id='resultJSON'></pre> </div>
+              <pre id='resultJSON'></pre> 
+              <textarea rows="6" disabled="disabled" id="result_area"></textarea>
+              <!-- <button id="copy_text" class="btn btn-primary" style="display: none;" onclick="myFunction()">Copy text</button> -->
+            </div>
     
         </div>
     
