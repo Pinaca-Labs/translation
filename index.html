@@ -135,9 +135,9 @@
         const headers = {
           'Content-Type': 'application/json',
         }
-        if(dropdown_val == "English - Telugu"){
-            url = 'https://translation-api.pinacalabs.com/en_te/async'
-            res_url = 'https://translation-api.pinacalabs.com/en_te/result'
+        if(dropdown_val == "Any - English"){
+            url = 'https://translation-api.pinacalabs.com/european_en/async'
+            res_url = 'https://translation-api.pinacalabs.com/european_en/result'
             dropdown_change_call(url, payload, headers, res_url);
         }
         else if(dropdown_val == "English - Tamil"){
@@ -277,18 +277,18 @@
                 <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">Select Language
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Telugu</a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Tamil</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Any - English</a></li>
+                  <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Tamil</a></li> -->
                   <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Malayalam</a></li> -->
                   <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Kannada</a></li> -->
                   <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Marathi</a></li> -->
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Hindi</a></li>
+                  <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Hindi</a></li>
                   <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Bengali</a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Punjabi</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Punjabi</a></li> -->
                   <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Gujarati</a></li> -->
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Chinese - English</a></li>
+                  <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Chinese - English</a></li>
                   <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Tamil - English</a></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Sinhala - English</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Sinhala - English</a></li> -->
                 </ul>
     
                 <button class="btn btn-primary" type="button" onclick="parseQuery()">Translate</button>
@@ -315,3 +315,4 @@
     </div>
     </body>
     </html> 
+                               
