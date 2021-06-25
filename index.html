@@ -145,6 +145,13 @@
             res_url = 'https://translation-api.pinacalabs.com/en_kn/result'
             dropdown_change_call(url, payload, headers, res_url);
         }
+
+        else if(dropdown_val == "Odiya - English"){
+            url = 'https://translation-api.pinacalabs.com/or_en/async'
+            res_url = 'https://translation-api.pinacalabs.com/or_en/result'
+            dropdown_change_call(url, payload, headers, res_url);
+        }
+
         // else if(dropdown_val == "English - Marathi"){
         //     url = 'https://translation-api.pinacalabs.com/en_mr/async'
         //     res_url = 'https://translation-api.pinacalabs.com/en_mr/result'
@@ -271,6 +278,7 @@
                   <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Tamil</a></li> -->
                   <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Malayalam</a></li> -->
                   <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Kannada</a></li>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Odiya - English</a></li>
                   <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Marathi</a></li> -->
                   <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Hindi</a></li>
                   <li role="presentation"><a role="menuitem" tabindex="-1" href="#">English - Bengali</a></li>
